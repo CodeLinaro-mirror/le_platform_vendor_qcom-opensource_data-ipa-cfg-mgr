@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2019,2020, The Linux Foundation. All rights reserved.
+Copyright (c) 2013-2021, The Linux Foundation. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are
@@ -234,7 +234,7 @@ public:
 	virtual int notify_flt_removed(uint8_t mux_id);
 
 	/* delete filter rule for wan_down event*/
-	virtual int handle_wan_down(bool is_sta_mode);
+	virtual int handle_wan_down(bool is_sta_mode, uint8_t mux_id = 0);
 
 	/* delete filter rule for wan_down event*/
 	virtual int handle_wan_down_v6(bool is_sta_mode, bool is_support_mpdn = true);
@@ -1199,6 +1199,30 @@ private:
 		}
 
 		return IPACM_INVALID_INDEX;
+	}
+
+	inline int get_eth_client_ip4_addr(uint8_t *mac_addr, uint32_t &ip_addr, uint8_t vlan_id = 0)
+	{
+		int clnt_indx;
+
+		clnt_indx = get_eth_client_index(mac_addr, vlan_id);
+		if(clnt_indx == IPACM_INVALID_INDEX)
+		{
+			IPACMERR("eth client not found/attached \n");
+			return IPACM_FAILURE;
+		}
+
+		if(get_client_memptr(eth_client, clnt_indx)->ipv4_set)
+		{
+			ip_addr = get_client_memptr(eth_client, clnt_indx)->v4_addr;
+			IPACMDBG_H("ip addr is 0x%X\n", ip_addr);
+			return IPACM_SUCCESS;
+		}
+		else
+		{
+			IPACMDBG_H("ipv4 address not set\n");
+			return IPACM_FAILURE;
+		}
 	}
 
 	inline int delete_eth_rtrules(int clt_indx, ipa_ip_type iptype)
