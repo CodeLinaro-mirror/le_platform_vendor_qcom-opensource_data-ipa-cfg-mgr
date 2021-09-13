@@ -966,8 +966,7 @@ void IPACM_Neighbor::event_callback(ipa_cm_event_id event, void *param)
 								(IPACM_Iface::ipacmcfg->iface_in_vlan_mode(data->iface_name)) &&
 								!(IPACM_Iface::ipacmcfg->is_added_vlan_iface(data->iface_name)))
 							{
-								IPACMDBG_H("not added VLAN interface %s, ignoring\n", data->iface_name);
-								return;
+								IPACMDBG_H("not added VLAN interface %s, add to cache \n", data->iface_name);
 							}
 #endif
 							if (num_neighbor_client_temp < IPA_MAX_NUM_NEIGHBOR_CLIENTS)
@@ -1110,8 +1109,12 @@ void IPACM_Neighbor::update_neigh_cache()
 		for (i = 0; i < num_neighbor_client; ++i)
 		{
 			if (memcmp(mac_addr_fdb, neighbor_client[i].mac_addr, sizeof(neighbor_client[i].mac_addr)) == 0) {
-				is_client_cached = true;
-				break;
+				if (strncmp(rdev_name, neighbor_client[i].iface_name,
+					sizeof(neighbor_client[i].iface_name)) == 0)
+				{
+					is_client_cached = true;
+					break;
+				}
 			}
 		}
 
