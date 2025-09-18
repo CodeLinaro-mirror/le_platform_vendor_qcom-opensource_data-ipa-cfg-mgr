@@ -2319,9 +2319,11 @@ int IPACM_Lan::handle_wan_up(ipa_ip_type ip_type)
 		/* add MTU rules for ipv4 */
 		modify_private_subnet();
 
+#ifdef FEATURE_VLAN_MPDN
 		/* MTU might have changed. Need to update ipv6 MTU rule if up */
 		if (IPACM_Wan::isWanUP_V6(ipa_if_num))
 			modify_ipv6_prefix_flt_rule();
+#endif
 
 		len = sizeof(struct ipa_ioc_add_flt_rule) + (1 * sizeof(struct ipa_flt_rule_add));
 		m_pFilteringTable = (struct ipa_ioc_add_flt_rule *)calloc(1, len);
@@ -2396,8 +2398,10 @@ int IPACM_Lan::handle_wan_up(ipa_ip_type ip_type)
 	}
 	else if(ip_type == IPA_IP_v6)
 	{
+#ifdef FEATURE_VLAN_MPDN
 		/* add ipv6_mtu rule */
 		modify_ipv6_prefix_flt_rule();
+#endif
 
 		/* MTU might have changed. Need to update ipv4 MTU rule if up */
 		if (IPACM_Wan::isWanUP(ipa_if_num))
@@ -2535,8 +2539,10 @@ int IPACM_Lan::handle_wan_up_ex(ipacm_ext_prop *ext_prop, ipa_ip_type iptype, ui
 	/* check only add static UL filter rule once */
 	if(iptype == IPA_IP_v6)
 	{
+#ifdef FEATURE_VLAN_MPDN
 		/* add ipv6_mtu rule */
 		modify_ipv6_prefix_flt_rule();
+#endif
 
 		/* MTU might have changed. Need to update ipv4 MTU rule if up */
 		if (IPACM_Wan::isWanUP(ipa_if_num))
@@ -2579,9 +2585,11 @@ int IPACM_Lan::handle_wan_up_ex(ipacm_ext_prop *ext_prop, ipa_ip_type iptype, ui
 		/* add MTU rules for ipv4 */
 		modify_private_subnet();
 
+#ifdef FEATURE_VLAN_MPDN
 		/* MTU might have changed. Need to update ipv6 MTU rule if up */
 		if (IPACM_Wan::isWanUP_V6(ipa_if_num))
 			modify_ipv6_prefix_flt_rule();
+#endif
 
 		if(modem_ul_v4_set == false)
 		{
