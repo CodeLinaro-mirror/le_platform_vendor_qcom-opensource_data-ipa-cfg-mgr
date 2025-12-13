@@ -2,7 +2,7 @@ AM_CPPFLAGS = -I./../inc \
 	      -I$(top_srcdir)/ipanat/inc \
 	      ${LIBXML_CFLAGS} \
 	      $(CFLAGS)
-AM_CPPFLAGS += -Wall -Wundef -Wno-trigraphs
+AM_CPPFLAGS += -Wall -Wundef -Wno-trigraphs -I$(DATAIPA_STAGING_INCDIR)
 
 if NO_L2TP
 AM_CPPFLAGS  += -DDEBUG -g -DFEATURE_ETH_BRIDGE_LE
