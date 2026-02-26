@@ -67,7 +67,7 @@ if test "x$TARGET" = "xsdxprairie"; then
     CPPFLAGS="${CPPFLAGS} -DFEATURE_IPACM_UL_FIREWALL -DFEATURE_IPACM_PER_CLIENT_STATS -DFEATURE_VLAN_MPDN"
     CFLAGS="${CFLAGS} -DFEATURE_IPACM_UL_FIREWALL -DFEATURE_IPACM_PER_CLIENT_STATS -DFEATURE_VLAN_MPDN"
 fi
-AM_CONDITIONAL(NO_L2TP, test "x$TARGET" = "xsdx20" || test "x$TARGET" = "xsdxpoorwills" || test "x$TARGET" = "xsdxprairie")
+AM_CONDITIONAL(NO_L2TP, test "x$TARGET" = "xsdx20" || test "x$TARGET" = "xsdxpoorwills" || test "x$TARGET" = "xsdxprairie" || test "x$TARGET" = "xkera")
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h netinet/in.h sys/ioctl.h unistd.h])
