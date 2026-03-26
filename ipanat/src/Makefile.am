@@ -1,4 +1,4 @@
-AM_CFLAGS = -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs
+AM_CFLAGS = -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -I$(DATAIPA_STAGING_INCDIR)
 
 if KERNELMODULES
 AM_CFLAGS += -I../inc $(KERNEL_DIR)/include
